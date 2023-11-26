@@ -1,20 +1,21 @@
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import MenuBar from "../../components/MenuBar";
 import { useState } from "react";
 import PresentCard from "../../components/PresentCard";
 
 function EventView() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   // const [show, setShow] = useState(false);
 
   const [nome, setNome] = useState("Aniversário de num sei quem");
-  const [data, setData] = useState("01/01/2023");
-  const [horario, setHorario] = useState("00:00");
-  const [cidade, setCidade] = useState("Ribeirão Preto - SP");
-  const [cep, setCep] = useState("14079-792");
-  const [rua, setRua] = useState("rua abc");
-  const [numero, setNumero] = useState("605");
-  const [bairro, setBairro] = useState("Chokito");
+  const [data] = useState("01/01/2023");
+  const [horario] = useState("00:00");
+  const [cidade] = useState("Ribeirão Preto - SP");
+  const [cep] = useState("14079-792");
+  const [rua] = useState("rua abc");
+  const [numero] = useState("605");
+  const [bairro] = useState("Chokito");
+  const [valor, setValor] = useState("199,00");
   // const [criador] = useState("Rau");
   const [descricao, setDescricao] = useState(
     "Lorem ipsum dolor sit amet consectetur adipisicing easdasdasdasdasdaasasasaslit. Nesciunt voluptates obcaecati numquam error et ut fugiat asperiores. Sunt nulla ad incidunt laboriosam, laudantium est unde natus cum numquam, neque facere. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, magni odio magnam commodi sunt ipsum eum! Voluptas eveniet aperiam at maxime, iste id dicta autem odio laudantium eligendi commodi distinctio!"
@@ -48,9 +49,35 @@ function EventView() {
           <div className="my-4 flex flex-col 2xl:flex-row space-y-4 2xl:space-y-0 2xl:space-x-4">
             <div className="w-full flex flex-col ">
               <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
-                <h4 className="text-xl text-gray-900 font-bold">
-                  Informações sobre o evento
-                </h4>
+                <span className="flex justify-between items-center mb-6">
+                  <h4 className="text-xl text-gray-900 font-bold">
+                    Informações sobre o evento
+                  </h4>
+                  <button
+                    onClick={() => navigate("/editar-evento")}
+                    className="px-4 py-2 border-[1px] border-indigo-500 rounded-lg flex gap-x-2 text-indigo-500 hover:bg-indigo-500 hover:text-white"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                    >
+                      <g
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                      >
+                        <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
+                        <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
+                      </g>
+                    </svg>
+
+                    <span>Editar evento</span>
+                  </button>
+                </span>
                 <ul className="mt-2 text-gray-700">
                   <li className="flex border-y py-2">
                     <span className="font-bold w-28 flex items-center">
@@ -152,17 +179,17 @@ function EventView() {
             </div>
             <div className="">
               <label className="label mt-1 ">
-                <span className="label-text text-black">Data:</span>
+                <span className="label-text text-black">Descrição:</span>
               </label>
               <input
                 type="text"
-                placeholder={"Data"}
-                onChange={(e) => setData(e.target.value)}
+                placeholder={"Descrição"}
+                onChange={(e) => setDescricao(e.target.value)}
                 value={data}
                 className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
               />
             </div>
-            <div className="">
+            {/* <div className="">
               <label className="label mt-1 ">
                 <span className="label-text text-black">Horario:</span>
               </label>
@@ -173,8 +200,8 @@ function EventView() {
                 value={horario}
                 className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
               />
-            </div>
-            <div className="">
+            </div> */}
+            {/* <div className="">
               <label className="label mt-1 ">
                 <span className="label-text text-black">Cidade:</span>
               </label>
@@ -185,8 +212,8 @@ function EventView() {
                 value={cidade}
                 className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
               />
-            </div>
-            <div className="">
+            </div> */}
+            {/* <div className="">
               <label className="label mt-1 ">
                 <span className="label-text text-black">Cep:</span>
               </label>
@@ -197,8 +224,8 @@ function EventView() {
                 value={cep}
                 className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
               />
-            </div>
-            <div className="">
+            </div> */}
+            {/* <div className="">
               <label className="label mt-1 ">
                 <span className="label-text text-black">Rua:</span>
               </label>
@@ -209,8 +236,8 @@ function EventView() {
                 value={rua}
                 className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
               />
-            </div>
-            <div className="">
+            </div> */}
+            {/* <div className="">
               <label className="label mt-1 ">
                 <span className="label-text text-black">Numero:</span>
               </label>
@@ -221,20 +248,20 @@ function EventView() {
                 value={numero}
                 className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
               />
-            </div>
+            </div> */}
             <div className="">
               <label className="label mt-1 ">
-                <span className="label-text text-black">Bairro:</span>
+                <span className="label-text text-black">Valor:</span>
               </label>
               <input
                 type="text"
-                placeholder={"Bairro"}
-                onChange={(e) => setBairro(e.target.value)}
-                value={bairro}
+                placeholder={"Valor"}
+                onChange={(e) => setValor(e.target.value)}
+                value={valor}
                 className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
               />
             </div>
-            <div className="">
+            {/* <div className="">
               <label className="label mt-1 ">
                 <span className="label-text text-black">Descrição:</span>
               </label>
@@ -244,7 +271,7 @@ function EventView() {
                 onChange={(e) => setDescricao(e.target.value)}
                 value={descricao}
               ></textarea>
-            </div>
+            </div> */}
 
             <div className="form_control">
               <label className="label">Adicionar foto</label>

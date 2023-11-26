@@ -1,0 +1,37 @@
+.div_portfolio {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+.close_button {
+  display: block;
+  position: relative;
+  width: 20px;
+  height: 20px;
+  float: right;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: rgb(0, 0, 0);
+  font-weight: 900;
+}
+
+.close_button input {
+  display: none;
+}
+
+/* .close_button img {
+  width: 20px;
+  margin-left: 2px;
+  cursor: pointer;
+} */
+
+.div_imagens_port {
+  display: flex;
+  padding: 6px 0px;
+
+  margin-right: 12px;
+}
+

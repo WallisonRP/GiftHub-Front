@@ -10,6 +10,7 @@ import AboutProject from "../view/pages/AboutProject";
 import EditProfile from "../view/pages/EditProfile";
 // import EventShare from "../view/pages/EventShare";
 import EventView from "../view/pages/EventView";
+import EditEvent from "../view/pages/EditEvent";
 // import { PrivateRoutes } from ".";
 
 const AppRoutes = () => {
@@ -25,6 +26,7 @@ const AppRoutes = () => {
         <Route path="/sobre-nos" element={<AboutUs />} />
         <Route path="/sobre-o-projeto" element={<AboutProject />} />
         <Route path="/eventos" element={<EventView />} />
+        <Route path="/editar-evento" element={<EditEvent />} />
 
         {/* <Route path="/home" element={<PrivateRoutes />}>
         </Route> */}
