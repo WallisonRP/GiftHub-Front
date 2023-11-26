@@ -6,7 +6,6 @@ function MenuBar() {
   const Menus = [
     { title: "Home", link: "/home" },
     { title: "Sobre Nós", link: "/home" },
-    { title: "Eventos", link: "/home" },
     { title: "Projeto", link: "/home" },
   ];
 
@@ -36,7 +35,7 @@ function MenuBar() {
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
               <img
-                alt="Tailwind CSS Navbar component"
+                alt="Foto de Perfil"
                 src="src/assets/rau.png"
               />
             </div>

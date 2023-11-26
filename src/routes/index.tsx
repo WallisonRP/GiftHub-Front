@@ -8,10 +8,11 @@ import Profile from "../view/pages/Profile";
 import AboutUs from "../view/pages/AboutUs";
 import AboutProject from "../view/pages/AboutProject";
 import EditProfile from "../view/pages/EditProfile";
+// import EventShare from "../view/pages/EventShare";
+import EventView from "../view/pages/EventView";
 // import { PrivateRoutes } from ".";
 
 const AppRoutes = () => {
-  
   return (
     <Router>
       <Routes>
@@ -23,6 +24,7 @@ const AppRoutes = () => {
         <Route path="/editar-perfil" element={<EditProfile />} />
         <Route path="/sobre-nos" element={<AboutUs />} />
         <Route path="/sobre-o-projeto" element={<AboutProject />} />
+        <Route path="/eventos" element={<EventView />} />
 
         {/* <Route path="/home" element={<PrivateRoutes />}>
         </Route> */}
