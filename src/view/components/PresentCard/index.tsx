@@ -1,8 +1,12 @@
+import { useNavigate } from "react-router-dom";
+
 interface PresentCardProps {
   editable?: boolean;
 }
 
 function PresentCard({ editable }: PresentCardProps) {
+  const navigate = useNavigate();
+
   return (
     <div className="">
       <div className="relative border-[1px] flex w-52 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-[0_3px_10px_-2px_rgba(0,0,0,0.3)]">
@@ -29,6 +33,7 @@ function PresentCard({ editable }: PresentCardProps) {
           {editable ? (
             <div className="flex gap-x-2">
               <button
+                onClick={() => navigate("/editar-presente")}
                 className="flex gap-x-1 select-none rounded-lg bg-gray-50 hover:bg-gray-200 py-2 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-blue-gray-900 transition-all hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
               >

@@ -5,8 +5,8 @@ function MenuBar() {
 
   const Menus = [
     { title: "Home", link: "/home" },
-    { title: "Sobre Nós", link: "/home" },
-    { title: "Projeto", link: "/home" },
+    { title: "Sobre Nós", link: "/sobre-nos" },
+    { title: "Projeto", link: "/sobre-o-projeto" },
   ];
 
   return (
@@ -34,10 +34,7 @@ function MenuBar() {
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img
-                alt="Foto de Perfil"
-                src="src/assets/rau.png"
-              />
+              <img alt="Foto de Perfil" src="src/assets/rau.png" />
             </div>
           </label>
           <ul

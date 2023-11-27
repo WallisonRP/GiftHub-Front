@@ -189,66 +189,7 @@ function EventView() {
                 className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
               />
             </div>
-            {/* <div className="">
-              <label className="label mt-1 ">
-                <span className="label-text text-black">Horario:</span>
-              </label>
-              <input
-                type="text"
-                placeholder={"Horario"}
-                onChange={(e) => setHorario(e.target.value)}
-                value={horario}
-                className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
-              />
-            </div> */}
-            {/* <div className="">
-              <label className="label mt-1 ">
-                <span className="label-text text-black">Cidade:</span>
-              </label>
-              <input
-                type="text"
-                placeholder={"Cidade"}
-                onChange={(e) => setCidade(e.target.value)}
-                value={cidade}
-                className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
-              />
-            </div> */}
-            {/* <div className="">
-              <label className="label mt-1 ">
-                <span className="label-text text-black">Cep:</span>
-              </label>
-              <input
-                type="text"
-                placeholder={"Cep"}
-                onChange={(e) => setCep(e.target.value)}
-                value={cep}
-                className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
-              />
-            </div> */}
-            {/* <div className="">
-              <label className="label mt-1 ">
-                <span className="label-text text-black">Rua:</span>
-              </label>
-              <input
-                type="text"
-                placeholder={"Rua"}
-                onChange={(e) => setRua(e.target.value)}
-                value={rua}
-                className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
-              />
-            </div> */}
-            {/* <div className="">
-              <label className="label mt-1 ">
-                <span className="label-text text-black">Numero:</span>
-              </label>
-              <input
-                type="text"
-                placeholder={"Numero"}
-                onChange={(e) => setNumero(e.target.value)}
-                value={numero}
-                className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
-              />
-            </div> */}
+
             <div className="">
               <label className="label mt-1 ">
                 <span className="label-text text-black">Valor:</span>
@@ -261,17 +202,6 @@ function EventView() {
                 className="input  input-bordered w-full max-w-[50rem] bg-white dark:bg-white"
               />
             </div>
-            {/* <div className="">
-              <label className="label mt-1 ">
-                <span className="label-text text-black">Descrição:</span>
-              </label>
-              <textarea
-                className="textarea textarea-bordered bg-white w-full max-w-[50rem] "
-                placeholder="Descrição"
-                onChange={(e) => setDescricao(e.target.value)}
-                value={descricao}
-              ></textarea>
-            </div> */}
 
             <div className="form_control">
               <label className="label">Adicionar foto</label>

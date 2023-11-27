@@ -1,8 +1,10 @@
+import MenuBar from "../../components/MenuBar"
+
 function AboutUs() {
     return (
-      <div>
-        AboutUs
-      </div>
+      <>
+      <MenuBar />
+      </>
     )
   }
   
