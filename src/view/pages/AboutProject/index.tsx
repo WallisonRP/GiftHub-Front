@@ -47,6 +47,7 @@ function AboutProject() {
                 Iago Butignon
               </h1>
 
+              <p className="capitalize text-gray-500">Desenvolvedor Mobile</p>
               <p className="mt-2 capitalize text-gray-500">2840481911048</p>
 
               <div className="-mx-2 mt-3 flex">
@@ -98,6 +99,7 @@ function AboutProject() {
                 Raul Cesar Bernardo
               </h1>
 
+              <p className="capitalize text-gray-500">Analista de Infraestrutura de TI</p>
               <p className="mt-2 capitalize text-gray-500">2840482111021</p>
 
               <div className="-mx-2 mt-3 flex">
@@ -149,6 +151,7 @@ function AboutProject() {
                 Wallison Franklin Pereira
               </h1>
 
+              <p className="capitalize text-gray-500">Analista de Suporte</p>
               <p className="mt-2 capitalize text-gray-500">2840482111012</p>
 
               <div className="-mx-2 mt-3 flex">
