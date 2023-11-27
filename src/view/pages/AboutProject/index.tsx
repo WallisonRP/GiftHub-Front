@@ -44,7 +44,7 @@ function AboutProject() {
               />
 
               <h1 className="mt-4 text-2xl font-semibold capitalize text-gray-700">
-                Iago de Carvalho Butignon
+                Iago Butignon
               </h1>
 
               <p className="mt-2 capitalize text-gray-500">2840481911048</p>
