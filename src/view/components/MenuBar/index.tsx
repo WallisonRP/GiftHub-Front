@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../../contexts/AuthContext";
+import { useContext } from "react";
 
 function MenuBar() {
   const navigate = useNavigate();
+  const { signOut } = useContext(AuthContext);
 
   const Menus = [
     { title: "Home", link: "/home" },
@@ -50,7 +53,14 @@ function MenuBar() {
               <a href="editar-perfil">Editar Perfil</a>
             </li>
             <li>
-              <a href="/">Sair</a>
+              <a
+                onClick={() => {
+                  signOut();
+                }}
+                href="/"
+              >
+                Sair
+              </a>
             </li>
           </ul>
         </div>
