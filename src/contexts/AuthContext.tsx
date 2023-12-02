@@ -27,7 +27,7 @@ export default function AuthContextProvider({ children }: any) {
       .then((res) => {
         const user = res.data.id;
         //@ts-ignore
-        const token = res.user;
+        const token = res.data;
         console.log(user);
         sessionStorage.setItem("@Auth:token", token);
         sessionStorage.setItem("@Auth:user", JSON.stringify(user));

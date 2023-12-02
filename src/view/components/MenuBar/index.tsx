@@ -50,7 +50,7 @@ function MenuBar() {
               </a>
             </li>
             <li>
-              <a href="editar-perfil">Editar Perfil</a>
+              <a onClick={() => navigate("/editar-perfil")}>Editar Perfil</a>
             </li>
             <li>
               <a

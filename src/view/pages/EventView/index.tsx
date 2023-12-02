@@ -21,24 +21,22 @@ function EventView() {
     "Lorem ipsum dolor sit amet consectetur adipisicing easdasdasdasdasdaasasasaslit. Nesciunt voluptates obcaecati numquam error et ut fugiat asperiores. Sunt nulla ad incidunt laboriosam, laudantium est unde natus cum numquam, neque facere. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, magni odio magnam commodi sunt ipsum eum! Voluptas eveniet aperiam at maxime, iste id dicta autem odio laudantium eligendi commodi distinctio!"
   );
 
-  function handleUpload(e: any) {
-    let file = e.target.files[0];
-    console.log(file);
+  const [base64Image, setBase64Image] = useState<any>("");
 
-    // let newName = `${id}-thumb`;
+  function handleChangeImage(e: any) {
+    const file = e.target.files[0];
 
-    // let fileExtension = file.name.split(".").pop();
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBase64Image(reader.result);
+      };
 
-    // let newNameWithExtension = newName + "." + fileExtension;
-
-    // let renamedFile: File = new File([file], newNameWithExtension, {
-    //   type: file.type,
-    //   lastModified: file.lastModified,
-    // });
-
-    // setThumb(renamedFile);
-    // console.log(renamedFile);
+      reader.readAsDataURL(file);
+    }
   }
+
+  
 
   return (
     <div>
@@ -208,7 +206,7 @@ function EventView() {
               <input
                 id="imagem-usuario"
                 type="file"
-                onChange={handleUpload}
+                onChange={handleChangeImage}
                 className="file-input file-input-bordered file-input-error bg-white w-full max-w-xs"
               />
             </div>

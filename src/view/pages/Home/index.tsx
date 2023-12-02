@@ -18,6 +18,21 @@ function Home() {
     "Lorem ipsum dolor sit amet consectetur adipisicing easdasdasdasdasdaasasasaslit. Nesciunt voluptates obcaecati numquam error et ut fugiat asperiores. Sunt nulla ad incidunt laboriosam, laudantium est unde natus cum numquam, neque facere. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, magni odio magnam commodi sunt ipsum eum! Voluptas eveniet aperiam at maxime, iste id dicta autem odio laudantium eligendi commodi distinctio!"
   );
 
+  const [base64Image, setBase64Image] = useState<any>("");
+
+  function handleChangeImage(e: any) {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBase64Image(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
   return (
     <div>
       <MenuBar />
@@ -258,9 +273,9 @@ function Home() {
             <div className="form_control">
               <label className="label">Adicionar foto</label>
               <input
-                id="imagem-usuario"
+                id="imagem-evento"
                 type="file"
-                // onChange={handleUpload}
+                onChange={handleChangeImage}
                 className="file-input file-input-bordered file-input-error bg-white w-full max-w-xs"
               />
             </div>
