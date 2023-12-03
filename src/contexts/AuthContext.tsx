@@ -5,13 +5,13 @@ import { Navigate } from "react-router-dom";
 export const AuthContext = createContext<any>({});
 
 export default function AuthContextProvider({ children }: any) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
     const loadStorageData = () => {
       const storageUser: any = sessionStorage.getItem("@Auth:user");
-      const storageToken = sessionStorage.getItem("@Auth:token");
-      if (storageToken && storageUser) {
+      const storageUserInfo = sessionStorage.getItem("@Auth:userInfo");
+      if (storageUserInfo && storageUser) {
         setUser(storageUser);
       }
     };
@@ -27,13 +27,11 @@ export default function AuthContextProvider({ children }: any) {
       .then((res) => {
         const user = res.data.id;
         //@ts-ignore
-        const token = res.data;
-        console.log(user);
-        sessionStorage.setItem("@Auth:token", token);
+        let userInfo = JSON.stringify(res.data);
+        sessionStorage.setItem("@Auth:userInfo", userInfo);
         sessionStorage.setItem("@Auth:user", JSON.stringify(user));
-        setUser(token);
+        setUser(userInfo);
       })
-      .finally(() => console.log(""))
       .catch(() => {});
   }
 
