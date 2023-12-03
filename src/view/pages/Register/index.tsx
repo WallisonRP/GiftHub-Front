@@ -1,11 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
 
   function handleRegister() {
     if (nome.length === 0) {
@@ -19,7 +21,7 @@ function Register() {
     } else {
       axios
         .post(
-          "http://192.168.1.2:8000/user",
+          "http://192.168.1.2:8000/user/",
           {
             name: nome,
             surname: sobrenome,
@@ -28,8 +30,11 @@ function Register() {
           },
           { withCredentials: true }
         )
-        .then(function (response) {
-          console.log(response);
+        .then((result) => {
+          if (result.status == 201) {
+            alert("Usuário criado com sucesso! Faça Login para continuar");
+            navigate("/");
+          }
         })
         .catch(function (error) {
           console.log(error, "error");

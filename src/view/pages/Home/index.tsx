@@ -1,12 +1,9 @@
-import { useNavigate } from "react-router-dom";
 import MenuBar from "../../components/MenuBar";
 import { useEffect, useState } from "react";
 import EventCard from "../../components/EventCard";
 
 function Home() {
-  const navigate = useNavigate();
-
-  const [userId, setUserId] = useState(
+  const [userId] = useState(
     sessionStorage.getItem("@Auth:user")?.replace(/"/g, "")
   );
   const [nome, setNome] = useState("");
@@ -14,12 +11,11 @@ function Home() {
   const [horario, setHorario] = useState("");
   const [cidade, setCidade] = useState("");
   const [estado, setEstado] = useState("");
-  const [complemento, setComplemento] = useState("");
   const [cep, setCep] = useState("");
   const [rua, setRua] = useState("");
   const [numero, setNumero] = useState("");
+  const [complemento, setComplemento] = useState("");
   const [bairro, setBairro] = useState("");
-  // const [criador] = useState("Rau");
   const [descricao, setDescricao] = useState("");
 
   const [base64Image, setBase64Image] = useState<any>("");
@@ -31,7 +27,6 @@ function Home() {
       const reader = new FileReader();
       reader.onloadend = () => {
         setBase64Image(reader.result);
-        console.log(reader.result);
       };
 
       reader.readAsDataURL(file);
@@ -42,7 +37,6 @@ function Home() {
   const [allEvents, setAllEvents] = useState<any>();
 
   useEffect(() => {
-    // setLoadingPage(true);
     fetch("http://192.168.1.2:8000/event/", {
       method: "GET",
       headers: {
@@ -52,11 +46,8 @@ function Home() {
       .then((res) => res.json())
       .then((json) => {
         setAllEvents(json);
-        console.log(json);
       })
       .finally(() => {
-        // let userToRequest = userId?.replace(/"/g, "");
-        // console.log(userToRequest);
         fetch(`http://192.168.1.2:8000/event/get_events_by_user_id/${userId}`, {
           method: "GET",
           headers: {
@@ -66,7 +57,6 @@ function Home() {
           .then((res) => res.json())
           .then((json) => {
             setUserEvents(json);
-            console.log(json);
           })
           .catch((error) => {
             console.error("Error fetching data:", error);
@@ -100,8 +90,6 @@ function Home() {
 
     let postDist = JSON.stringify(eventTemplate);
     eventPost(postDist);
-
-    console.log("Adicionar evento:", postDist);
   }
 
   const eventPost = (eventTemplate: any) => {
@@ -154,28 +142,32 @@ function Home() {
                   Adicionar novo evento
                 </h1>
               </label>
-              {userEvents ? (
+              {userEvents && userEvents.length ? (
                 <div className="flex gap-4 flex-wrap">
                   {userEvents.map((item: any) => (
                     <EventCard item={item} />
                   ))}
                 </div>
               ) : (
-                "Sem Eventos Atualmente"
+                <div className="flex items-center text-lg font-semibold ml-10">
+                  Sem eventos disponíveis no momento
+                </div>
               )}
             </div>
           </div>
           <div className="ml-10 py-20">
             <div>
               <div className="py-4 text-xl font-bold">Todos os Eventos</div>
-              {allEvents ? (
+              {allEvents && allEvents.length ? (
                 <div className="flex gap-4 flex-wrap">
                   {allEvents.map((item: any) => (
                     <EventCard item={item} />
                   ))}
                 </div>
               ) : (
-                <div>Sem eventos disponíveis no momento</div>
+                <div className="flex items-center text-lg font-semibold mt-6">
+                  Sem eventos disponíveis no momento
+                </div>
               )}
             </div>
           </div>

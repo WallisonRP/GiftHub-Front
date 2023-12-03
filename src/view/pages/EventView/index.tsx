@@ -1,27 +1,27 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import MenuBar from "../../components/MenuBar";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PresentCard from "../../components/PresentCard";
 
 function EventView() {
   const navigate = useNavigate();
-  // const [show, setShow] = useState(false);
+  const { id } = useParams();
 
-  const [nome, setNome] = useState("Aniversário de num sei quem");
-  const [data] = useState("01/01/2023");
-  const [horario] = useState("00:00");
-  const [cidade] = useState("Ribeirão Preto - SP");
-  const [cep] = useState("14079-792");
-  const [rua] = useState("rua abc");
-  const [numero] = useState("605");
-  const [bairro] = useState("Chokito");
-  const [valor, setValor] = useState("199,00");
-  // const [criador] = useState("Rau");
-  const [descricao, setDescricao] = useState(
-    "Lorem ipsum dolor sit amet consectetur adipisicing easdasdasdasdasdaasasasaslit. Nesciunt voluptates obcaecati numquam error et ut fugiat asperiores. Sunt nulla ad incidunt laboriosam, laudantium est unde natus cum numquam, neque facere. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, magni odio magnam commodi sunt ipsum eum! Voluptas eveniet aperiam at maxime, iste id dicta autem odio laudantium eligendi commodi distinctio!"
-  );
+  const [nome, setNome] = useState("");
+  const [data, setData] = useState("");
+  const [horario, setHorario] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
+  const [complemento, setComplemento] = useState("");
+  const [cep, setCep] = useState("");
+  const [rua, setRua] = useState("");
+  const [numero, setNumero] = useState("");
+  const [bairro, setBairro] = useState("");
+  const [descricao, setDescricao] = useState("");
 
-  const [base64Image, setBase64Image] = useState<any>("");
+  const [valor, setValor] = useState("");
+
+  // const [base64Image, setBase64Image] = useState<any>("");
 
   function handleChangeImage(e: any) {
     const file = e.target.files[0];
@@ -29,14 +29,39 @@ function EventView() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setBase64Image(reader.result);
+        // setBase64Image(reader.result);
       };
 
       reader.readAsDataURL(file);
     }
   }
 
-  
+  useEffect(() => {
+    fetch(`http://192.168.1.2:8000/event/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setNome(json.name);
+        setData(json.date);
+        setHorario(json.time);
+        setCidade(json.address.city);
+        setEstado(json.address.state);
+        setCep(json.address.cep);
+        setRua(json.address.street);
+        setNumero(json.address.number);
+        setComplemento(json.address.complement);
+        setBairro(json.address.district);
+        setDescricao(json.description);
+        console.log(json);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   return (
     <div>
@@ -52,7 +77,7 @@ function EventView() {
                     Informações sobre o evento
                   </h4>
                   <button
-                    onClick={() => navigate("/editar-evento")}
+                    onClick={() => navigate(`/editar-evento/${id}`)}
                     className="px-4 py-2 border-[1px] border-indigo-500 rounded-lg flex gap-x-2 text-indigo-500 hover:bg-indigo-500 hover:text-white"
                   >
                     <svg
@@ -98,7 +123,8 @@ function EventView() {
                       Endereço:
                     </span>
                     <span className="text-gray-700 flex items-center h-[3.2rem]">
-                      {rua}, {numero}, {bairro} - {cidade} - {cep}
+                      {rua}, {numero}, {complemento}, {bairro} - {cidade} -{" "}
+                      {estado} - {cep}
                     </span>
                   </li>
                   <li className="flex border-b py-2">

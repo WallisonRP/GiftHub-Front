@@ -62,9 +62,9 @@ function Login() {
                   <label className="block text-gray-700 text-sm font-bold mb-2">
                     Senha
                   </label>
-                  <a href="/recuperar-senha" className="text-xs text-gray-500">
+                  {/* <a href="/recuperar-senha" className="text-xs text-gray-500">
                     Esqueceu sua Senha?
-                  </a>
+                  </a> */}
                 </div>
                 <input
                   className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
