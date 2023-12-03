@@ -76,7 +76,9 @@ function MenuBar() {
               <div className="w-10 rounded-full">
                 <img
                   alt="Foto de Perfil"
-                  src={newUserInfo.picture ? newUserInfo.picture : userDefaultImage}
+                  src={
+                    newUserInfo.picture ? newUserInfo.picture : userDefaultImage
+                  }
                 />
               </div>
             </label>
@@ -93,7 +95,9 @@ function MenuBar() {
                 </a>
               </li>
               <li>
-                <a onClick={() => navigate("/editar-perfil")}>Editar Perfil</a>
+                <a onClick={() => navigate(`/editar-perfil/${userId}`)}>
+                  Editar Perfil
+                </a>
               </li>
               <li>
                 <a

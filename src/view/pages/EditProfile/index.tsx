@@ -1,18 +1,85 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import MenuBar from "../../components/MenuBar";
+import { serverIP } from "../../../variables/links";
 
 function EditProfile() {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [nome, setNome] = useState("Raul");
-  const [sobrenome, setSobrenome] = useState("Cesar");
-  const [telefone, setTelefone] = useState("(16) 98765-4321");
-  const [email] = useState("rau@rau.com");
-  const [cidade, setCidade] = useState("Ribeirão Preto - SP");
-  const [sobre, setSobre] = useState(
-    "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt voluptates obcaecati numquam error et ut fugiat asperiores. Sunt nulla ad incidunt laboriosam, laudantium est unde natus cum numquam, neque facere. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut, magni odio magnam commodi sunt ipsum eum! Voluptas eveniet aperiam at maxime, iste id dicta autem odio laudantium eligendi commodi distinctio!"
+  const [userInfo, setUserInfo] = useState<any>({});
+
+  const [nome, setNome] = useState("");
+  const [sobrenome, setSobrenome] = useState("");
+  const [cidade, setCidade] = useState("");
+  const [estado, setEstado] = useState("");
+  const [sobre, setSobre] = useState("");
+
+  const [userId] = useState(
+    sessionStorage.getItem("@Auth:user")?.replace(/"/g, "")
   );
+
+  useEffect(() => {
+    fetch(`${serverIP}/user/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setUserInfo(json);
+        setNome(json.name);
+        setSobrenome(json.surname);
+        setCidade(json.city);
+        setEstado(json.state);
+        setSobre(json.description);
+        console.log(json);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  function editProfile(e: any) {
+    e.preventDefault();
+
+    let userTemplate = {
+      email: userInfo.email,
+      password: userInfo.password,
+      name: nome,
+      surname: sobrenome,
+      description: sobre,
+      cep: "",
+      number: "",
+      street: "",
+      district: "",
+      city: "",
+      state: "",
+      complement: "",
+    };
+    let postDist = JSON.stringify(userTemplate);
+    userPut(postDist);
+  }
+
+  const userPut = (userTemplate: any) => {
+    fetch(`${serverIP}/user/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: userTemplate,
+    })
+      .then((result) => {
+        if (result.ok) {
+          alert("Dados alterados com sucesso!");
+          window.location.reload();
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <>
@@ -73,22 +140,10 @@ function EditProfile() {
                 </li>
                 <li className="flex border-b py-4">
                   <span className="font-bold w-28 flex items-center">
-                    Telefone:
-                  </span>
-                  <input
-                    type="text"
-                    placeholder={telefone}
-                    onChange={(e) => setTelefone(e.target.value)}
-                    value={telefone}
-                    className="input h-[3.2rem] input-bordered w-1/2 max-w-[50rem] bg-gray-400 dark:bg-gray-100 rounded-xl px-4 text-gray-700 flex items-center"
-                  />
-                </li>
-                <li className="flex border-b py-4">
-                  <span className="font-bold w-28 flex items-center">
                     Email:
                   </span>
                   <span className="text-gray-700 flex items-center h-[3.2rem]">
-                    {email}
+                    {userInfo.email}
                   </span>
                 </li>
                 <li className="flex border-b py-4">
@@ -105,6 +160,18 @@ function EditProfile() {
                 </li>
                 <li className="flex border-b py-4">
                   <span className="font-bold w-28 flex items-center">
+                    Estado:
+                  </span>
+                  <input
+                    type="text"
+                    placeholder={estado}
+                    onChange={(e) => setEstado(e.target.value)}
+                    value={userInfo.state}
+                    className="input h-[3.2rem] input-bordered w-1/2 max-w-[50rem] bg-gray-400 dark:bg-gray-100 rounded-xl px-4 text-gray-700 flex items-center"
+                  />
+                </li>
+                <li className="flex border-b py-4">
+                  <span className="font-bold w-28 flex items-center">
                     Sobre Mim:
                   </span>
                   <textarea
@@ -115,7 +182,10 @@ function EditProfile() {
                   ></textarea>
                 </li>
               </ul>
-              <button className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-10 py-2 rounded text-sm space-x-2 transition duration-100 mt-6 ml-2">
+              <button
+                onClick={editProfile}
+                className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-10 py-2 rounded text-sm space-x-2 transition duration-100 mt-6 ml-2"
+              >
                 <span>Salvar</span>
               </button>
             </div>

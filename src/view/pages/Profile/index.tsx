@@ -157,7 +157,7 @@ function Profile() {
             )}
             <div>
               <button
-                onClick={() => navigate("/editar-perfil")}
+                onClick={() => navigate(`/editar-perfil/${userId}`)}
                 className="py-2 px-4 border-gray-600 border-solid border-[1px] mt-3 rounded-md hover:bg-gray-600 hover:text-white"
               >
                 Editar Perfil
