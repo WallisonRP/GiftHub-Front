@@ -27,6 +27,15 @@ function Register() {
             surname: sobrenome,
             email: email,
             password: senha,
+            cep: "",
+            city: "",
+            complement: "",
+            description: "",
+            district: "",
+            number: "",
+            picture: "",
+            state: "",
+            street: "",
           },
           { withCredentials: true }
         )
