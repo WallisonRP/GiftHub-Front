@@ -24,7 +24,6 @@ function EventView() {
   const [descricao, setDescricao] = useState("");
 
   const [dataToExport, setDataToExport] = useState<any>("");
-  const [dataToImport, setDataToImport] = useState<any>("");
 
   const [presentName, setPresentName] = useState("");
   const [presentValue, setPresentValue] = useState("");
@@ -141,17 +140,16 @@ function EventView() {
   }
 
   const importData = (fileContent: any) => {
-    setDataToImport(fileContent);
     productImport(fileContent);
   };
 
   const productImport = (fileContent: any) => {
+    const formData = new FormData();
+    formData.append("file", fileContent); // 'file' é o nome do campo esperado no servidor
+
     fetch(`${serverIP}/product/import_products/${id}`, {
       method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: fileContent,
+      body: formData,
     })
       .then((result) => {
         if (result.ok) {

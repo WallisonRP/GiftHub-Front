@@ -13,6 +13,7 @@ import EventView from "../view/pages/EventView";
 import EditEvent from "../view/pages/EditEvent";
 import EditPresent from "../view/pages/EditPresent";
 import { PrivateRoutes } from ".";
+import ChangePassword from "../view/pages/ChangePassword";
 // import { PrivateRoutes } from ".";
 
 const AppRoutes = () => {
@@ -26,6 +27,7 @@ const AppRoutes = () => {
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<Home />} />
           <Route path="/perfil" element={<Profile />} />
+          <Route path="/alterar-senha/:id" element={<ChangePassword />} />
           <Route path="/editar-perfil/:id" element={<EditProfile />} />
           <Route path="/sobre-nos" element={<AboutUs />} />
           <Route path="/sobre-o-projeto" element={<AboutProject />} />

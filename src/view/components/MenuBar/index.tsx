@@ -42,7 +42,7 @@ function MenuBar() {
 
   const Menus = [
     { title: "Home", link: "/home" },
-    { title: "Sobre Nós", link: "/sobre-nos" },
+    // { title: "Sobre Nós", link: "/sobre-nos" },
     { title: "Projeto", link: "/sobre-o-projeto" },
   ];
 
@@ -97,6 +97,11 @@ function MenuBar() {
               <li>
                 <a onClick={() => navigate(`/editar-perfil/${userId}`)}>
                   Editar Perfil
+                </a>
+              </li>
+              <li>
+                <a onClick={() => navigate(`/alterar-senha/${userId}`)}>
+                  Alterar Senha
                 </a>
               </li>
               <li>
