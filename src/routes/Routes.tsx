@@ -29,7 +29,7 @@ const AppRoutes = () => {
           <Route path="/editar-perfil/:id" element={<EditProfile />} />
           <Route path="/sobre-nos" element={<AboutUs />} />
           <Route path="/sobre-o-projeto" element={<AboutProject />} />
-          <Route path="/editar-presente" element={<EditPresent />} />
+          <Route path="/editar-presente/:id" element={<EditPresent />} />
           <Route path="/evento/:id" element={<EventView />} />
           <Route path="/editar-evento/:id" element={<EditEvent />} />
         </Route>

@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { useContext, useEffect, useState } from "react";
-import { userDefaultImage } from "../../../variables/images";
+import { userDefaultImage, logoImage } from "../../../variables/images";
 import { serverIP } from "../../../variables/links";
 
 function MenuBar() {
@@ -50,7 +50,7 @@ function MenuBar() {
     <div className="navbar justify-between shadow-md bg-base-100 pt-4 px-8">
       <div className="">
         <a className="cursor-pointer" href="/home">
-          <img className="w-32 -mt-[.8rem]" src="src/assets/logo.png" alt="" />
+          <img className="w-32 -mt-[.8rem]" src={logoImage} alt="" />
         </a>
       </div>
       <div className="flex gap-x-10">

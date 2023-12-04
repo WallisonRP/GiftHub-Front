@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import MenuBar from "../../components/MenuBar";
 import "./style.css";
+import { serverIP } from "../../../variables/links";
+import { eventDefaultImage } from "../../../variables/images";
 
 function EditEvent() {
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ function EditEvent() {
   const [descricao, setDescricao] = useState("");
 
   useEffect(() => {
-    fetch(`http://192.168.1.2:8000/event/${id}`, {
+    fetch(`${serverIP}/event/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -39,15 +41,16 @@ function EditEvent() {
         setNome(json.name);
         setData(json.date);
         setHorario(json.time);
-        setCidade(json.address.city);
-        setEstado(json.address.state);
-        setCep(json.address.cep);
-        setRua(json.address.street);
-        setNumero(json.address.number);
-        setComplemento(json.address.complement);
-        setBairro(json.address.district);
+        setCidade(json.city);
+        setEstado(json.state);
+        setCep(json.cep);
+        setRua(json.street);
+        setNumero(json.number);
+        setComplemento(json.complement);
+        setBairro(json.district);
         setDescricao(json.description);
-        setEventImage(json.image);
+        setEventImage(json.picture);
+        console.log(json);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -75,29 +78,27 @@ function EditEvent() {
     let imageToUpdate = base64Image ? base64Image : eventImage;
 
     let eventTemplate = {
-      address: {
-        cep: cep,
-        city: cidade,
-        complement: complemento,
-        district: bairro,
-        number: numero,
-        state: estado,
-        street: rua,
-      },
+      user_id: userId,
+      picture: imageToUpdate,
+      cep: cep,
+      city: cidade,
+      complement: complemento,
+      district: bairro,
+      number: numero,
+      state: estado,
+      street: rua,
       date: data,
       description: descricao,
       id: id,
-      image: imageToUpdate,
       name: nome,
       time: horario,
-      user_id: userId,
     };
     let postDist = JSON.stringify(eventTemplate);
     eventPost(postDist);
   }
 
   const eventPost = (eventTemplate: any) => {
-    fetch(`http://192.168.1.2:8000/event/${id}`, {
+    fetch(`${serverIP}/event/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -107,7 +108,7 @@ function EditEvent() {
       .then((result) => {
         if (result.ok) {
           alert("Evento alterado com sucesso!");
-          window.location.reload();
+          navigate(-1);
         }
       })
       .catch((error) => {
@@ -292,11 +293,23 @@ function EditEvent() {
                       <div className="">
                         <div className="mb-2">Thumbnail:</div>
                         <div className="flex">
-                          <img
-                            src={base64Image ? base64Image : eventInfo.image}
-                            className="rounded-lg w-96 h-36 object-cover"
-                            alt=""
-                          />
+                          {eventInfo.picture ? (
+                            <img
+                              src={
+                                base64Image ? base64Image : eventInfo.picture
+                              }
+                              className="rounded-lg w-96 h-36 object-cover"
+                              alt=""
+                            />
+                          ) : (
+                            <img
+                              src={
+                                base64Image ? base64Image : eventDefaultImage
+                              }
+                              className="rounded-lg w-96 h-36 object-cover"
+                              alt=""
+                            />
+                          )}
                           <div className="close_button ml-1">
                             <label
                               htmlFor="imagem-usuario"

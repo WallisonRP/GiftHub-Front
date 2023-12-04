@@ -1,39 +1,58 @@
 import { useNavigate } from "react-router-dom";
+import { serverIP } from "../../../variables/links";
+import { defaulPresentImage } from "../../../variables/images";
 
 interface PresentCardProps {
   editable?: boolean;
+  item: any;
 }
 
-function PresentCard({ editable }: PresentCardProps) {
+function PresentCard({ editable, item }: PresentCardProps) {
   const navigate = useNavigate();
+
+  function removeEvent(id: any) {
+    fetch(`${serverIP}/product/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((data) => {
+        if (data.ok) {
+          alert("Produto removido com sucesso!");
+          window.location.reload();
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 
   return (
     <div className="">
       <div className="relative border-[1px] flex w-52 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-[0_3px_10px_-2px_rgba(0,0,0,0.3)]">
         <div className="relative mx-4 mt-4 h-44 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700">
           <img
-            src="https://images.unsplash.com/photo-1629367494173-c78a56567877?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=927&amp;q=80"
+            src={item.picture ? item.picture : defaulPresentImage}
             className="h-full w-full object-cover"
           />
         </div>
         <div className="p-3">
           <div className="mb-1 flex items-center justify-between">
             <p className="block font-sans text-base font-medium leading-relaxed text-blue-gray-900 antialiased">
-              Apple AirPods
+              {item.name}
             </p>
           </div>
           <p className="block font-sans text-base font-medium leading-relaxed text-blue-800 antialiased">
-            R$105.00
+            R${item.value}
           </p>
           <p className="block font-sans text-sm font-normal leading-normal text-gray-700 antialiased opacity-75 mt-1">
-            Um fone bom pra curtir a vida adoidado
+            {item.description}
           </p>
         </div>
         <div className="flex justify-center py-4 pt-0">
           {editable ? (
             <div className="flex gap-x-2">
               <button
-                onClick={() => navigate("/editar-presente")}
+                onClick={() => navigate(`/editar-presente/${item.id}`)}
                 className="flex gap-x-1 select-none rounded-lg bg-gray-50 hover:bg-gray-200 py-2 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-blue-gray-900 transition-all hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
               >
@@ -51,6 +70,7 @@ function PresentCard({ editable }: PresentCardProps) {
                 <span>Editar</span>
               </button>
               <button
+                onClick={() => removeEvent(item.id)}
                 className="flex gap-x-1 select-none rounded-lg bg-none border text-red-500 hover:text-white hover:bg-red-400 py-2 px-3 text-center align-middle font-sans text-xs font-bold uppercase text-blue-gray-900 transition-all hover:scale-105 focus:scale-105 focus:opacity-[0.85] active:scale-100 active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 type="button"
               >

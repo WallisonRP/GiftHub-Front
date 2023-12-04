@@ -3,17 +3,16 @@ import { useNavigate } from "react-router-dom";
 import { eventDefaultImage } from "../../../variables/images";
 
 function EventCard({ item }: any) {
-  const [defaultEventImage] = useState<any>(eventDefaultImage);
-
+  const [defaultEventImage] = useState<string>(eventDefaultImage);
   const navigate = useNavigate();
 
   return (
     <div className="w-[20vw]">
       <div className="bg-white pb-6 rounded-3xl border shadow-lg h-[350px] relative">
-        <img
+      <img
           className="rounded-tl-3xl rounded-tr-3xl w-full object-cover object-center mb-4 h-[148.562px]"
-          src={item.image ? item.image : defaultEventImage}
-          alt={item.image}
+          src={item.picture ? item.picture : defaultEventImage}
+          alt={item.picture}
         />
         <div className="px-4">
           <h2 className="text-lg text-gray-900 font-medium mb-4">
@@ -57,12 +56,11 @@ function EventCard({ item }: any) {
               </g>
             </svg>
             <p className="leading-relaxed text-base">
-              {item.address.city} - {item.address.state}
+              {item.city} - {item.state}
             </p>
           </span>
           <span
             onClick={() => navigate(`/evento/${item.id}`)}
-            // onClick={() => console.log("akpsdf")}
             className="absolute bottom-4 flex gap-x-1 items-center left-1/2 -translate-x-1/2 border-[1px] text-indigo-500 border-indigo-500 rounded-md px-4 py-1 whitespace-nowrap hover:bg-indigo-500 hover:text-white cursor-pointer"
           >
             <svg

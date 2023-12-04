@@ -1,18 +1,90 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import MenuBar from "../../components/MenuBar";
 import "./style.css";
+import { serverIP } from "../../../variables/links";
+import { defaulPresentImage } from "../../../variables/images";
 
 function EditPresent() {
   const navigate = useNavigate();
+  const { id } = useParams();
 
-  const [nome, setNome] = useState("Aniversário de num sei quem");
-  const [valor, setValor] = useState("199,00");
-  const [descricao, setDescricao] = useState(
-    "Lorem ipsum dolor sit amet consectetur adipisicing easdas!"
-  );
+  const [nome, setNome] = useState("");
+  const [valor, setValor] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [productInfo, setProductInfo] = useState<any>({});
+  const [productImage, setProductImage] = useState("");
 
-  function changedImage() {}
+  const [base64Image, setBase64Image] = useState<any>();
+
+  function handleChangeImage(e: any) {
+    const file = e.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setBase64Image(reader.result);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }
+
+  useEffect(() => {
+    fetch(`${serverIP}/product/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setProductInfo(json);
+        setValor(json.value);
+        setNome(json.name);
+        setDescricao(json.description);
+        setProductImage(json.picture);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
+  function editProduct(e: any) {
+    e.preventDefault();
+
+    let imageToUpdate = base64Image ? base64Image : productImage;
+
+    let productTemplate = {
+      event_id: productInfo.event_id,
+      picture: imageToUpdate,
+      name: nome,
+      value: valor,
+      description: descricao,
+    };
+    let postDist = JSON.stringify(productTemplate);
+    eventPost(postDist);
+  }
+
+  const eventPost = (productTemplate: any) => {
+    fetch(`${serverIP}/product/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: productTemplate,
+    })
+      .then((result) => {
+        if (result.ok) {
+          alert("Presente alterado com sucesso!");
+          navigate(-1);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
   return (
     <>
       <MenuBar />
@@ -83,11 +155,19 @@ function EditPresent() {
                   <div className="">
                     <div className="my-2">Foto do presente:</div>
                     <div className="flex">
-                      <img
-                        src={"changeThumb" ? "tempThumb" : "thumb.src"}
-                        className="rounded-lg w-52 h-36 object-cover"
-                        alt=""
-                      />
+                      {productImage ? (
+                        <img
+                          src={base64Image ? base64Image : productImage}
+                          className="rounded-lg w-52 h-36 object-cover"
+                          alt=""
+                        />
+                      ) : (
+                        <img
+                          src={base64Image ? base64Image : defaulPresentImage}
+                          className="rounded-lg w-52 h-36 object-cover"
+                          alt=""
+                        />
+                      )}
                       <div className="close_button ml-1">
                         <label
                           htmlFor="imagem-usuario"
@@ -112,7 +192,7 @@ function EditPresent() {
                           </svg>
                           <input
                             className="editFile"
-                            onChange={changedImage}
+                            onChange={handleChangeImage}
                             type="file"
                             id="imagem-usuario"
                           />
@@ -122,7 +202,10 @@ function EditPresent() {
                   </div>
                 </li>
               </ul>
-              <button className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-10 py-2 rounded text-sm space-x-2 transition duration-100 mt-6 ml-2">
+              <button
+                onClick={editProduct}
+                className="flex items-center bg-blue-600 hover:bg-blue-700 text-gray-100 px-10 py-2 rounded text-sm space-x-2 transition duration-100 mt-6 ml-2"
+              >
                 <span>Salvar</span>
               </button>
             </div>

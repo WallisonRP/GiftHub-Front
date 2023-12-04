@@ -1,6 +1,7 @@
 import MenuBar from "../../components/MenuBar";
 import { useEffect, useState } from "react";
 import EventCard from "../../components/EventCard";
+import { serverIP } from "../../../variables/links";
 
 function Home() {
   const [userId] = useState(
@@ -70,30 +71,31 @@ function Home() {
   function addEvent(e: any) {
     e.preventDefault();
 
+    let imageToSend = base64Image ? base64Image : "";
+
     let eventTemplate = {
       user_id: userId,
+      picture: imageToSend,
       name: nome,
       date: data,
       time: horario,
       description: descricao,
-      image: base64Image,
-      address: {
-        cep: cep,
-        number: numero,
-        street: rua,
-        district: bairro,
-        city: cidade,
-        state: estado,
-        complement: complemento,
-      },
+      cep: cep,
+      number: numero,
+      street: rua,
+      district: bairro,
+      city: cidade,
+      state: estado,
+      complement: complemento,
     };
 
     let postDist = JSON.stringify(eventTemplate);
+    console.log(eventTemplate);
     eventPost(postDist);
   }
 
   const eventPost = (eventTemplate: any) => {
-    fetch("http://192.168.1.2:8000/event/", {
+    fetch(`${serverIP}/event/`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -332,7 +334,6 @@ function Home() {
               <div className="form_control">
                 <label className="label">Adicionar foto</label>
                 <input
-                  required
                   id="imagem-evento"
                   type="file"
                   onChange={handleChangeImage}
