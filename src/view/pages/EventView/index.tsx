@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import PresentCard from "../../components/PresentCard";
 import { serverIP } from "../../../variables/links";
 import { defaulPresentImage } from "../../../variables/images";
+import ExportButton from "../../components/ExportButton";
+import ImportButton from "../../components/ImportButton";
 
 function EventView() {
   const navigate = useNavigate();
@@ -20,6 +22,9 @@ function EventView() {
   const [numero, setNumero] = useState("");
   const [bairro, setBairro] = useState("");
   const [descricao, setDescricao] = useState("");
+
+  const [dataToExport, setDataToExport] = useState<any>("");
+  const [dataToImport, setDataToImport] = useState<any>("");
 
   const [presentName, setPresentName] = useState("");
   const [presentValue, setPresentValue] = useState("");
@@ -76,6 +81,22 @@ function EventView() {
             setEventProducts(json);
             console.log(json);
           })
+          .finally(() => {
+            fetch(`${serverIP}/product/export_products/${id}`, {
+              method: "GET",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+              .then((res) => res.json())
+              .then((json) => {
+                setDataToExport(json);
+                console.log(json);
+              })
+              .catch((error) => {
+                console.error("Error fetching data:", error);
+              });
+          })
           .catch((error) => {
             console.error("Error fetching data:", error);
           });
@@ -118,6 +139,30 @@ function EventView() {
     console.log(presentTemplate);
     presentPost(postPresent);
   }
+
+  const importData = (fileContent: any) => {
+    setDataToImport(fileContent);
+    productImport(fileContent);
+  };
+
+  const productImport = (fileContent: any) => {
+    fetch(`${serverIP}/product/import_products/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: fileContent,
+    })
+      .then((result) => {
+        if (result.ok) {
+          alert("Produtos importados com sucesso!");
+          navigate("/");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   const presentPost = (presentTemplate: any) => {
     fetch(`${serverIP}/product/`, {
@@ -203,16 +248,10 @@ function EventView() {
                         height="24"
                         viewBox="0 0 24 24"
                       >
-                        <g
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                        >
-                          <path d="m16.475 5.408l2.117 2.117m-.756-3.982L12.109 9.27a2.118 2.118 0 0 0-.58 1.082L11 13l2.648-.53c.41-.082.786-.283 1.082-.579l5.727-5.727a1.853 1.853 0 1 0-2.621-2.621" />
-                          <path d="M19 15v3a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h3" />
-                        </g>
+                        <path
+                          fill="currentColor"
+                          d="M7.615 20q-.67 0-1.143-.472Q6 19.056 6 18.385V6H5V5h4v-.77h6V5h4v1h-1v12.385q0 .69-.462 1.152q-.463.463-1.153.463h-8.77ZM17 6H7v12.385q0 .269.173.442t.442.173h8.77q.23 0 .423-.192q.192-.193.192-.423V6ZM9.808 17h1V8h-1v9Zm3.384 0h1V8h-1v9ZM7 6v13V6Z"
+                        />
                       </svg>
 
                       <span>Excluir</span>
@@ -261,7 +300,13 @@ function EventView() {
             <div className="w-full flex flex-col">
               <div className="flex-1 bg-white rounded-lg shadow-xl p-8">
                 <div>
-                  <div className="py-4 text-xl font-bold">Meus Presentes</div>
+                  <div className="flex justify-between py-4">
+                    <div className="text-xl font-bold">Meus Presentes</div>
+                    <div className="flex gap-x-4">
+                      <ImportButton onFileChange={importData} />
+                      <ExportButton responseData={dataToExport} />
+                    </div>
+                  </div>
                   <div className="flex gap-x-4">
                     <label
                       htmlFor="my-drawer"
