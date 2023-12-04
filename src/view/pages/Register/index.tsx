@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { serverIP } from "../../../variables/links";
 
 function Register() {
   const [nome, setNome] = useState("");
@@ -21,7 +22,7 @@ function Register() {
     } else {
       axios
         .post(
-          "http://192.168.1.2:8000/user/",
+          `${serverIP}/user/`,
           {
             name: nome,
             surname: sobrenome,

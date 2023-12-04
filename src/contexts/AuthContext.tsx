@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import { serverIP } from "../variables/links";
 
 export const AuthContext = createContext<any>({});
 
@@ -20,7 +21,7 @@ export default function AuthContextProvider({ children }: any) {
 
   async function signIn(email: string, password: string) {
     await axios
-      .post("http://192.168.1.2:8000/user/sign_in", {
+      .post(`${serverIP}/user/sign_in`, {
         email: email,
         password: password,
       })

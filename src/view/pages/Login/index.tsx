@@ -3,6 +3,7 @@ import { useContext, useState } from "react";
 import axios from "axios";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { serverIP } from "../../../variables/links";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -19,7 +20,7 @@ function Login() {
       e.preventDefault();
       await signIn(email, senha);
       axios
-        .post("http://192.168.1.2:8000/user/sign_in", {
+        .post(`${serverIP}/user/sign_in`, {
           email: email,
           password: senha,
         })

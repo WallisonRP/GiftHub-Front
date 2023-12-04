@@ -38,7 +38,7 @@ function Home() {
   const [allEvents, setAllEvents] = useState<any>();
 
   useEffect(() => {
-    fetch("http://192.168.1.2:8000/event/", {
+    fetch(`${serverIP}/event/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -49,7 +49,7 @@ function Home() {
         setAllEvents(json);
       })
       .finally(() => {
-        fetch(`http://192.168.1.2:8000/event/get_events_by_user_id/${userId}`, {
+        fetch(`${serverIP}/event/get_events_by_user_id/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
